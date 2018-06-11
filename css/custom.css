@@ -1,0 +1,217 @@
+.msgError {
+    text-align: center;
+    color: #d4000e;
+}
+
+.vulpis {
+    color: black;
+}
+
+.vulpis:hover,
+.vulpis:focus {
+    color: black;
+}
+
+.badge {
+    color: white !important;
+    position: absolute;
+    right: 17px;
+    display: none;
+}
+
+.badge.active {
+    background: #d4000e !important;
+}
+
+.cad span {
+    margin: 7px 0 1px 0px !important;
+}
+
+.save-button {
+    padding-left: 0px;
+    margin-top: 20px;
+}
+
+.col-sm-12,
+.col-sm-6,
+.col-sm-10,
+.col-sm-2 {
+    margin-bottom: 15px !important;
+}
+
+.bootstrap-tagsinput {
+    width: 100%;
+    padding: 6px 0 !important;
+}
+
+.label-info.success {
+    background-color: #4CAF50;
+}
+
+.label-info.error {
+    background-color: #d4000e;
+}
+
+.bootstrap-tagsinput input {
+    height: auto !important;
+    width: auto !important;
+    display: inline;
+}
+
+.div-search-button {
+    text-align: right;
+}
+
+@media (max-width: 1023px) {
+    .row-tag {
+        display: block;
+    }
+    .table-responsive {
+        max-width: 100% !important;
+    }
+    @media (min-width: 768px) {
+        .row-tag {
+            max-width: 100% !important;
+        }
+    }
+}
+
+.background-table {
+    display: none;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 90;
+}
+
+.table-responsive {
+    min-width: 50%;
+    display: none;
+    position: absolute;
+    z-index: 99;
+    background: white;
+    padding: 20px;
+    max-width: 65%;
+}
+
+
+.js-basic-example {
+    min-width: 100%;
+}
+
+tr {
+    cursor: pointer;
+}
+
+.js-basic-example[value="listar"] tr {
+    cursor: default;
+}
+
+.form-group .form-line .form-label.img {
+    top: -20px;
+}
+
+.form-group .form-line .form-label.tinymce {
+    top: -25px;
+}
+
+.form-group.form-float.tinymce {
+    margin-top: 15px;
+}
+
+.dropify-wrapper .dropify-message p {
+    text-align: center;
+}
+
+.img-preview {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.card .card-inside-title {
+    margin-bottom: 40px;
+}
+
+.card .card-inside-title.aprovacao {
+    margin-bottom: 15px;
+}
+
+.noticia-detail {
+    margin-top: 25px;
+}
+
+.colorpicker .form-label,
+.colorpicker.form-group .form-line.focused:after {
+    z-index: 10;
+}
+
+table.table-bordered.dataTable {
+    table-layout: fixed;
+    width: 100% !important;
+}
+
+table.table-bordered.dataTable th,
+table.table-bordered.dataTable td {
+    width: auto !important;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    
+}
+
+.table-search-buttons.col-sm-12 {
+    padding: 0px !important;
+}
+
+div.dataTables_filter input {
+    background-image: url('../images/searchicon.png');
+    background-position: 10px 6px;
+    background-repeat: no-repeat;
+    width: 100% !important;
+    padding-left: 40px;
+    font-size: 14px !important;
+    background-size: 15px;
+    
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    width: 100% !important;
+}
+
+.ml-20px{
+    margin-left: 20px;
+}
+
+.dataTableEdit[disabled]{
+    background: none;
+    border: none;
+}
+
+td i.material-icons{
+    cursor: pointer;
+}
+
+#modalId{
+    display: none;
+}
+
+label#cor-error{
+    position: absolute;
+    left: 5px;
+    top: 40px;
+}
+
+.innerTd{
+    max-height: 40px;
+    min-height: 40px;
+}
+
+.innerTd p{
+    margin: 0;
+}
+
+.isAdm{
+    display: block;
+}
