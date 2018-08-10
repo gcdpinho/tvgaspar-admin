@@ -30,12 +30,14 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: serverUrl + "createCategoria",
+                url: serverUrl + "backoffice/category",
                 data: {
-                    titulo: $('input[name="titulo"]').val(),
-                    texto: $('input[name="texto"]').val(),
-                    cor: $('input[name="cor"]').val(),
-                    token: localStorage.getItem('token')
+                    category: $('input[name="titulo"]').val(),
+                    description: $('input[name="texto"]').val(),
+                    color: $('input[name="cor"]').val()
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);

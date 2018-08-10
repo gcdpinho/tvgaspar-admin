@@ -14,7 +14,7 @@ $(function () {
 
     //Preenchimento da categoria (edit)
     var dataTag = JSON.parse(localStorage.getItem('tagEdit'));
-    $('input[name="titulo"]').val(dataTag.titulo);
+    $('input[name="titulo"]').val(dataTag.tag);
     $('input[name="titulo"]').focus();
 
     //Get info usuario
@@ -28,12 +28,13 @@ $(function () {
         if ($("#tag").valid()) {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
-                type: "POST",
-                url: serverUrl + "updateTag",
+                type: "PUT",
+                url: serverUrl + "backoffice/tag/" + dataTag.id,
                 data: {
-                    titulo: $('input[name="titulo"]').val(),
-                    id: dataTag.id,
-                    token: localStorage.getItem('token')
+                    tag: $('input[name="titulo"]').val()
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);

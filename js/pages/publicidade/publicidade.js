@@ -41,15 +41,17 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: serverUrl + "createPublicidade",
+                url: serverUrl + "backoffice/ad",
                 data: {
-                    titulo: $('input[name="titulo"]').val(),
-                    tipo: $('input[name="tipo"]').val(),
-                    texto: $('input[name="texto"]').val(),
-                    link: $('input[name="link"]').val(),
-                    flgAtivo: 1,
-                    idImagem: getDataId("imagem", $('input[name="imagem"]').val(), "link"),
-                    token: localStorage.getItem('token')
+                    ad: $('input[name="titulo"]').val(),
+                    type: $('input[name="tipo"]').val(),
+                    description: $('input[name="texto"]').val(),
+                    src: $('input[name="link"]').val(),
+                    flgActive: 1,
+                    image_id: getDataId("imagem", $('input[name="imagem"]').val(), "src"),
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);

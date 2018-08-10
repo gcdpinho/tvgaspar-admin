@@ -67,52 +67,64 @@ $(function () {
     //Form Salve
     $('#imagem').submit(function (e) {
         if ($("#imagem").valid()) {
+            var tags = [];
+            var entry;
+            $('.label-info.success').each(function () {
+                entry = {}
+                entry['tag_id'] = getDataId("tag", $(this).text(), "tag");
+                tags.push(entry);
+            });
+            var json = JSON.stringify(tags);
             $('.page-loader-wrapper').fadeIn();
             var file = $('input[name="link"]').prop('files')[0];
             $.ajax({
                 type: "POST",
-                url: serverUrl + "createImagem",
+                url: serverUrl + "backoffice/image2/" + tags,
                 data: {
-                    titulo: $('input[name="titulo"]').val(),
-                    link: file.name,
-                    token: localStorage.getItem('token')
+                    image: $('input[name="titulo"]').val(),
+                    src: file.name
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);
                     var data = [];
                     var entry;
-                    if (registerMessage(response, $('#imagem'), "IMAGEM", false)) {
-                        $('.label-info.success').each(function () {
-                            entry = {}
-                            entry['idImagem'] = response.insertId;
-                            entry['idTag'] = getDataId("tag", $(this).text(), "titulo");
-                            data.push(entry);
-                        });
-                        console.log(data);
-                        $.ajax({
-                            type: "POST",
-                            url: serverUrl + "createImagemTag",
-                            data: {
-                                data: data,
-                                token: localStorage.getItem('token')
-                            },
-                            success: function (response) {
-                                console.log(response);
-                                var storageRef = firebase.storage().ref();
+                    // if (registerMessage(response, $('#imagem'), "IMAGEM", false)) {
+                    //     $('.label-info.success').each(function () {
+                    //         entry = {}
+                    //         entry['image_id'] = response.insertId;
+                    //         entry['tag_id'] = getDataId("tag", $(this).text(), "tag");
+                    //         data.push(entry);
+                    //     });
+                    //     console.log(data);
+                    //     $.ajax({
+                    //         type: "POST",
+                    //         url: serverUrl + "backoffice/" + response.insertId,
+                    //         data: {
+                    //             data: data
+                    //         },
+                    //         headers: {
+                    //             'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    //         },
+                    //         success: function (response) {
+                    //             console.log(response);
+                    //             var storageRef = firebase.storage().ref();
 
-                                storageRef.child('imagens/' + file.name).put(file).then(function (snapshot) {
-                                    registerMessage(response, $('#imagem'), "IMAGEM", true);
-                                }, function (error) {
-                                    console.log(error);
-                                    showNotification("Erro ao cadastrar IMAGEM, tente novamente.", "error");
-                                });
-                            },
-                            error: function (error) {
-                                console.log(error.message);
-                                logout('Sessão inválida. Faça o login novamente.');
-                            }
-                        });
-                    }
+                    //             storageRef.child('imagens/' + file.name).put(file).then(function (snapshot) {
+                    //                 registerMessage(response, $('#imagem'), "IMAGEM", true);
+                    //             }, function (error) {
+                    //                 console.log(error);
+                    //                 showNotification("Erro ao cadastrar IMAGEM, tente novamente.", "error");
+                    //             });
+                    //         },
+                    //         error: function (error) {
+                    //             console.log(error.message);
+                    //             logout('Sessão inválida. Faça o login novamente.');
+                    //         }
+                    //     });
+                    // }
                 },
                 error: function (error) {
                     console.log(error.message);

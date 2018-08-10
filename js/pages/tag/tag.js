@@ -24,10 +24,12 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: serverUrl + "createTag",
+                url: serverUrl + "backoffice/tag",
                 data: {
-                    titulo: $('input[name="titulo"]').val(),
-                    token: localStorage.getItem('token')
+                    tag: $('input[name="titulo"]').val()
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);

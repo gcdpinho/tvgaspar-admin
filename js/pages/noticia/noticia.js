@@ -118,18 +118,20 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: serverUrl + "createNoticia",
+                url: serverUrl + "backoffice/news",
                 data: {
-                    manchete: $('input[name="manchete"]').val(),
-                    subManchete: $('input[name="subManchete"]').val(),
-                    resumo: $('input[name="resumo"]').val(),
-                    texto: tinymce.activeEditor.getContent(),
-                    autor: $('input[name="autor"]').val(),
-                    dtCadastro: $('input[name="dtCadastro"]').val(),
-                    flgAtivo: 1,
-                    aprovacao: usuario.isAdm,
-                    idUsuario: usuario.id,
-                    token: localStorage.getItem('token')
+                    headline: $('input[name="manchete"]').val(),
+                    subtitle: $('input[name="subManchete"]').val(),
+                    abstract: $('input[name="resumo"]').val(),
+                    body: tinymce.activeEditor.getContent(),
+                    author: $('input[name="autor"]').val(),
+                    created_at: $('input[name="dtCadastro"]').val(),
+                    flgActive: 1,
+                    approval: usuario.isAdm,
+                    user_id: usuario.id
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);

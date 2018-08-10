@@ -44,31 +44,31 @@ $(function () {
         var url = serverUrl;
         switch (page) {
             case "noticia":
-                url += "deleteNoticiaById";
+                url += "backoffice/news/deleteNoticiaById/" + $("#modalId").html();
                 break;
             case "publicidade":
-                url += "deletePublicidadeById";
+                url += "backoffice/ad/" + $("#modalId").html();
                 break;
             case "imagem":
-                url += "deleteImagemById";
+                url += "backoffice/image/" + $("#modalId").html();
                 break;
             case "video":
-                url += "deleteVideoById";
+                url += "backoffice/video/" + $("#modalId").html();
                 break;
             case "tag":
-                url += "deleteTagById";
+                url += "backoffice/tag/" + $("#modalId").html()
                 break;
             case "categoria":
-                url += "deleteCategoriaById";
+                url += "backoffice/category/" + $("#modalId").html();
                 break;
         }
+        console.log(url);
         //Delete function
         $.ajax({
-            type: "POST",
+            type: "DELETE",
             url: url,
-            data: {
-                id: $("#modalId").html(),
-                token: localStorage.getItem('token')
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             success: function (response) {
                 console.log(response);

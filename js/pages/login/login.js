@@ -26,26 +26,23 @@ $(function () {
             localStorage.setItem('lembrarSenha', $('input#rememberme').is(":checked"));
             $.ajax({
                 type: "POST",
-                url: serverUrl + "login",
+                url: serverUrl + "auth",
                 data: {
-                    login: $('input[name="username"]').val(),
-                    senha: $('input[name="password"]').val()
+                    email: $('input[name="username"]').val(),
+                    password: $('input[name="password"]').val()
                 },
                 success: function (response) {
-                    console.log(response.message);
-                    if (response.success) {
-                        localStorage.setItem('token', response.token);
-                        localStorage.setItem('msgError', "");
-                        $('.page-loader-wrapper').fadeOut();
-                        location.href = "../../index.html";
-                    } else {
-                        localStorage.setItem('msgError', "Usuário ou senha inválido, tente novamente.");
-                        $(".msgError").html(localStorage.getItem('msgError'));
-                        $('.page-loader-wrapper').fadeOut();
-                    }
+                    console.log(response);
+                    localStorage.setItem('usuario', JSON.stringify(response));
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('msgError', "");
+                    $('.page-l  oader-wrapper').fadeOut();
+                    location.href = "../../index.html";
                 },
                 error: function (error) {
                     console.log(error);
+                    localStorage.setItem('msgError', "Usuário ou senha inválido, tente novamente.");
+                    $(".msgError").html(localStorage.getItem('msgError'));
                     $('.page-loader-wrapper').fadeOut();
                 }
             });

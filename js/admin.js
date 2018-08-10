@@ -485,34 +485,34 @@ $(function () {
 
 //Função de logout do sistema
 var logout = function (msgError) {
-    console.log(msgError);
-    localStorage.setItem('token', "");
-    localStorage.setItem('usuario', "");
-    localStorage.setItem('tag', "");
-    localStorage.setItem('imagem', "");
-    localStorage.setItem('video', "");
-    localStorage.setItem('categoria', "");
-    localStorage.setItem('noticia', "");
-    localStorage.setItem('publicidade', "");
-    localStorage.setItem('aprovacao', "");
-    localStorage.setItem('not', "");
-    localStorage.setItem('tagEdit', "");
-    localStorage.setItem('imagemEdit', "");
-    localStorage.setItem('videoEdit', "");
-    localStorage.setItem('categoriaEdit', "");
-    localStorage.setItem('noticiaEdit', "");
-    localStorage.setItem('publicidadeEdit', "");
-    localStorage.setItem('lembrarSenha', "");
-    if (typeof msgError == "object")
-        localStorage.setItem('msgError', "");
-    else
-        localStorage.setItem('msgError', msgError);
+    // console.log(msgError);
+    // localStorage.setItem('token', "");
+    // localStorage.setItem('usuario', "");
+    // localStorage.setItem('tag', "");
+    // localStorage.setItem('imagem', "");
+    // localStorage.setItem('video', "");
+    // localStorage.setItem('categoria', "");
+    // localStorage.setItem('noticia', "");
+    // localStorage.setItem('publicidade', "");
+    // localStorage.setItem('aprovacao', "");
+    // localStorage.setItem('not', "");
+    // localStorage.setItem('tagEdit', "");
+    // localStorage.setItem('imagemEdit', "");
+    // localStorage.setItem('videoEdit', "");
+    // localStorage.setItem('categoriaEdit', "");
+    // localStorage.setItem('noticiaEdit', "");
+    // localStorage.setItem('publicidadeEdit', "");
+    // localStorage.setItem('lembrarSenha', "");
+    // if (typeof msgError == "object")
+    //     localStorage.setItem('msgError', "");
+    // else
+    //     localStorage.setItem('msgError', msgError);
 
-    var path = location.pathname;
-    if (path.indexOf('pages') >= 0)
-        location.href = "../login/login.html";
-    else
-        location.href = "pages/login/login.html"
+    // var path = location.pathname;
+    // if (path.indexOf('pages') >= 0)
+    //     location.href = "../login/login.html";
+    // else
+    //     location.href = "pages/login/login.html"
 }
 
 $('#logout').click(logout);
@@ -637,11 +637,11 @@ var getAllTags = function (close, listar) {
     $('.bootstrap-tagsinput').find('input').attr('name', 'tag');
 
     $.ajax({
-        type: "POST",
-        url: serverUrl + "getAllTags",
+        type: "GET",
+        url: serverUrl + "backoffice/tag",
         //async: false,
-        data: {
-            token: localStorage.getItem('token')
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (response) {
             console.log(response);
@@ -674,7 +674,7 @@ var getAllImagens = function (listar) {
         else {
             var imagens = value.split(", ");
             for (var element in imagens)
-                if (getDataId("imagem", imagens[element], "link") == undefined)
+                if (getDataId("imagem", imagens[element], "src") == undefined)
                     return false;
 
             return true;
@@ -693,11 +693,11 @@ var getAllImagens = function (listar) {
     }, "É permitido apenas uma IMAGEM.");
 
     $.ajax({
-        type: "POST",
-        url: serverUrl + "getAllImagens",
+        type: "GET",
+        url: serverUrl + "backoffice/image",
         //async: false,
-        data: {
-            token: localStorage.getItem('token')
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (response) {
             console.log(response);
@@ -727,7 +727,7 @@ var getAllVideos = function (close, listar) {
         else {
             var videos = value.split(", ");
             for (var element in videos)
-                if (getDataId("video", videos[element], "link") == undefined)
+                if (getDataId("video", videos[element], "src") == undefined)
                     return false;
 
             return true;
@@ -735,11 +735,11 @@ var getAllVideos = function (close, listar) {
     }, "Existem VÍDEOS não cadastradas.");
 
     $.ajax({
-        type: "POST",
-        url: serverUrl + "getAllVideos",
+        type: "GET",
+        url: serverUrl + "backoffice/video",
         //async: false,
-        data: {
-            token: localStorage.getItem('token')
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (response) {
             console.log(response);
@@ -777,11 +777,11 @@ var getAllCategorias = function (close, listar) {
     }, "Existem CATEGORIAS não cadastradas.");
 
     $.ajax({
-        type: "POST",
-        url: serverUrl + "getAllCategorias",
+        type: "GET",
+        url: serverUrl + "backoffice/category",
         //async: false,
-        data: {
-            token: localStorage.getItem('token')
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (response) {
             console.log(response);
@@ -870,7 +870,7 @@ var search = async function (params, close) {
                 row.pop();
             }
             if (params == "imagem")
-                imagens.push(row[row.length - 1]);
+                imagens.push(row[row.length - 2]);
 
             if ($('.js-basic-example.' + params).attr("value") == "listar")
                 row.push(
@@ -1014,14 +1014,14 @@ var tableFunction = function (data, colunas, params, close) {
                 switch (params) {
                     case "tag":
                         data = {
-                            titulo: table.row($(this).parents("tr")).data()[0],
-                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"),
+                            tag: table.row($(this).parents("tr")).data()[0],
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "tag"),
                         }
                         break;
                     case "imagem":
                         data = {
                             titulo: table.row($(this).parents("tr")).data()[0],
-                            id: getDataId(params, $(this).parents("tr").find('img').parent('td').text(), "link"),
+                            id: getDataId(params, $(this).parents("tr").find('img').parent('td').text(), "src"),
                         }
                         break;
                     case "video":
@@ -1029,7 +1029,7 @@ var tableFunction = function (data, colunas, params, close) {
                             titulo: table.row($(this).parents("tr")).data()[0],
                             texto: table.row($(this).parents("tr")).data()[1],
                             link: table.row($(this).parents("tr")).data()[2],
-                            id: getDataId(params, table.row($(this).parents("tr")).data()[2], "link"),
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[2], "src"),
                         }
                         break;
                     case "categoria":
@@ -1037,7 +1037,7 @@ var tableFunction = function (data, colunas, params, close) {
                             titulo: table.row($(this).parents("tr")).data()[0],
                             texto: table.row($(this).parents("tr")).data()[1],
                             cor: table.row($(this).parents("tr")).data()[2],
-                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"),
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "category"),
                         }
                         break;
                     case "noticia":
@@ -1047,7 +1047,7 @@ var tableFunction = function (data, colunas, params, close) {
                             texto: table.row($(this).parents("tr")).data()[2],
                             autor: table.row($(this).parents("tr")).data()[3],
                             dtCadastro: table.row($(this).parents("tr")).data()[4],
-                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "manchete"),
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "headline"),
                         }
                         break
                     case "publicidade":
@@ -1056,7 +1056,7 @@ var tableFunction = function (data, colunas, params, close) {
                             tipo: table.row($(this).parents("tr")).data()[1],
                             texto: table.row($(this).parents("tr")).data()[2],
                             link: table.row($(this).parents("tr")).data()[3],
-                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"),
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "ad"),
                         }
                         break;
                 }
@@ -1066,22 +1066,22 @@ var tableFunction = function (data, colunas, params, close) {
             case "delete":
                 switch (params) {
                     case "tag":
-                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"));
+                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[0], "tag"));
                         break;
                     case "imagem":
-                        $('#modalId').html(getDataId(params, $(this).parents("tr").find('img').parent('td').text(), "link"));
+                        $('#modalId').html(getDataId(params, $(this).parents("tr").find('img').parent('td').text(), "src"));
                         break;
                     case "video":
-                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[2], "link"));
+                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[2], "src"));
                         break;
                     case "categoria":
-                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"));
+                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[0], "category"));
                         break;
                     case "noticia":
-                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[0], "manchete"));
+                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[0], "headline"));
                         break
                     case "publicidade":
-                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"));
+                        $('#modalId').html(getDataId(params, table.row($(this).parents("tr")).data()[0], "ad"));
                         break
                 }
                 $('#defaultModal').modal('show');
@@ -1157,7 +1157,7 @@ var initFirebase = function () {
 var getUsuario = function () {
     var usuario = JSON.parse(localStorage.getItem('usuario'));
     if (usuario != null && usuario != "") {
-        $('.name').html(usuario.nome);
+        $('.name').html(usuario.name);
         $('.email').html(usuario.email);
 
     } else
@@ -1169,10 +1169,10 @@ var getUsuario = function () {
 //Get todas as notícias
 var getAllNoticias = function (aprovacao, close) {
     $.ajax({
-        type: "POST",
-        url: serverUrl + "getAllNoticias",
-        data: {
-            token: localStorage.getItem('token')
+        type: "GET",
+        url: serverUrl + "backoffice/news",
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (response) {
             console.log(response);
@@ -1220,10 +1220,10 @@ var setAprovacoes = function (flgNoticia) {
 //Get todas publicidades
 var getAllPublicidades = function () {
     $.ajax({
-        type: "POST",
-        url: serverUrl + "getAllPublicidades",
-        data: {
-            token: localStorage.getItem('token')
+        type: "GET",
+        url: serverUrl + "backoffice/ad",
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (response) {
             console.log(response);
