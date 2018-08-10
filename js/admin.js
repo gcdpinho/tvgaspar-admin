@@ -840,6 +840,9 @@ var search = async function (params, close) {
             coluna["title"] = colunaAux[element].toUpperCase();
             colunas.push(coluna);
         }
+        if (params == "imagem")
+            colunas.pop();
+        // colunas.push({title: 'Preview'});
         if ($('.js-basic-example.' + params).attr("value") == "listar")
             colunas.push({
                 title: "Ações".toUpperCase()
@@ -869,8 +872,10 @@ var search = async function (params, close) {
                 row.pop();
                 row.pop();
             }
-            if (params == "imagem")
-                imagens.push(row[row.length - 2]);
+            if (params == "imagem") {
+                row.pop();
+                imagens.push(row[row.length - 1]);
+            }
 
             if ($('.js-basic-example.' + params).attr("value") == "listar")
                 row.push(
@@ -882,9 +887,9 @@ var search = async function (params, close) {
         }
         var urls = await getUrls(imagens);
         var pos = $('.js-basic-example.' + params).attr("value") == "listar" ? 2 : 1;
-        for (url in urls)
+        for (url in urls) {
             data[url][data[url].length - pos] = "<img class='img-preview' src='" + urls[url] + "'>" + data[url][data[url].length - pos];
-
+        }
         if (data.length > 0 && $('.js-basic-example').length > 0)
             tableFunction(data, colunas, params, close);
 

@@ -68,18 +68,19 @@ $(function () {
     $('#imagem').submit(function (e) {
         if ($("#imagem").valid()) {
             var tags = [];
-            var entry;
             $('.label-info.success').each(function () {
-                entry = {}
-                entry['tag_id'] = getDataId("tag", $(this).text(), "tag");
+                var entry;
+                entry = getDataId("tag", $(this).text(), "tag");
                 tags.push(entry);
             });
+            console.log(tags);
             var json = JSON.stringify(tags);
             $('.page-loader-wrapper').fadeIn();
             var file = $('input[name="link"]').prop('files')[0];
+
             $.ajax({
                 type: "POST",
-                url: serverUrl + "backoffice/image2/" + tags,
+                url: serverUrl + "backoffice/image/" + JSON.stringify(tags),
                 data: {
                     image: $('input[name="titulo"]').val(),
                     src: file.name
@@ -89,8 +90,14 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    var data = [];
-                    var entry;
+                    var storageRef = firebase.storage().ref();
+
+                    storageRef.child('imagens/' + file.name).put(file).then(function (snapshot) {
+                        registerMessage(response, $('#imagem'), "IMAGEM", true);
+                    }, function (error) {
+                        console.log(error);
+                        showNotification("Erro ao cadastrar IMAGEM, tente novamente.", "error");
+                    });
                     // if (registerMessage(response, $('#imagem'), "IMAGEM", false)) {
                     //     $('.label-info.success').each(function () {
                     //         entry = {}
