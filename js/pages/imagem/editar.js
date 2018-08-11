@@ -42,12 +42,13 @@ $(function () {
         if ($("#imagem").valid()) {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
-                type: "POST",
-                url: serverUrl + "updateImagem",
+                type: "PUT",
+                url: serverUrl + "backoffice/image/" + dataImagem.id,
                 data: {
-                    titulo: $('input[name="titulo"]').val(),
-                    id: dataImagem.id,
-                    token: localStorage.getItem('token')
+                    image: $('input[name="titulo"]').val()
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);
