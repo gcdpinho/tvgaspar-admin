@@ -73,8 +73,6 @@ $(function () {
                 entry = getDataId("tag", $(this).text(), "tag");
                 tags.push(entry);
             });
-            console.log(tags);
-            var json = JSON.stringify(tags);
             $('.page-loader-wrapper').fadeIn();
             var file = $('input[name="link"]').prop('files')[0];
 

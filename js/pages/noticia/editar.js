@@ -101,6 +101,8 @@ $(function () {
     $('input[name="dtCadastro"]').parents('.form-line').addClass('focused');
     $('textarea[name="texto"]').val(dataNoticia.texto);
     $('textarea[name="texto"]').focus();
+    $('input[name="resumo"]').val(dataNoticia.resumo);
+    $('input[name="resumo"]').focus();
 
     //Get info usuario
     var usuario = getUsuario();
@@ -114,17 +116,18 @@ $(function () {
         if ($("#noticia").valid()) {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
-                type: "POST",
-                url: serverUrl + "updateNoticia",
+                type: "PUT",
+                url: serverUrl + "backoffice/news/" + dataNoticia.id,
                 data: {
-                    manchete: $('input[name="manchete"]').val(),
-                    subManchete: $('input[name="subManchete"]').val(),
-                    resumo: $('input[name="resumo"]').val(),
-                    texto: tinymce.activeEditor.getContent(),
-                    autor: $('input[name="autor"]').val(),
-                    dtCadastro: $('input[name="dtCadastro"]').val(),
-                    id: dataNoticia.id,
-                    token: localStorage.getItem('token')
+                    headline: $('input[name="manchete"]').val(),
+                    subtitle: $('input[name="subManchete"]').val(),
+                    abstract: $('input[name="resumo"]').val(),
+                    body: tinymce.activeEditor.getContent(),
+                    author: $('input[name="autor"]').val(),
+                    created_at: $('input[name="dtCadastro"]').val()
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);

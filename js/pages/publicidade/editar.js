@@ -39,15 +39,16 @@ $(function () {
         if ($("#publicidade").valid()) {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
-                type: "POST",
-                url: serverUrl + "updatePublicidade",
+                type: "PUT",
+                url: serverUrl + "backoffice/ad/" + dataPublicidade.id,
                 data: {
-                    titulo: $('input[name="titulo"]').val(),
-                    tipo: $('input[name="tipo"]').val(),
-                    texto: $('input[name="texto"]').val(),
-                    link: $('input[name="link"]').val(),
-                    id: dataPublicidade.id,
-                    token: localStorage.getItem('token')
+                    ad: $('input[name="titulo"]').val(),
+                    type: $('input[name="tipo"]').val(),
+                    description: $('input[name="texto"]').val(),
+                    src: $('input[name="link"]').val()
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);

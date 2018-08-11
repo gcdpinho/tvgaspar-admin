@@ -115,10 +115,50 @@ $(function () {
     //Form Salve
     $('#noticia').submit(function (e) {
         if ($("#noticia").valid()) {
+            var tags = [];
+            $('.label-info.success').each(function () {
+                var entry;
+                entry = getDataId("tag", $(this).text(), "tag");
+                tags.push(entry);
+            });
+
+            var categorys = [];
+            var arrCategorias = $('input[name="categoria"]').val().split(", ");
+            arrCategorias = arrCategorias.filter(function (value, index, self) {
+                return (self.indexOf(value) == index)
+            });
+            for (var element in arrCategorias) {
+                var entry;
+                entry = getDataId("categoria", arrCategorias[element], "category");
+                categorys.push(entry);
+            }
+
+            var videos = [];
+            var arrVideos = $('input[name="video"]').val().split(", ");
+            arrVideos = arrVideos.filter(function (value, index, self) {
+                return (self.indexOf(value) == index)
+            });
+            for (var element in arrVideos) {
+                var entry;
+                entry = getDataId("video", arrVideos[element], "src");
+                videos.push(entry);
+            }
+
+            var imagens = [];
+            var arrImagens = $('input[name="imagem"]').val().split(", ");
+            arrImagens = arrImagens.filter(function (value, index, self) {
+                return (self.indexOf(value) == index)
+            });
+            for (var element in arrImagens) {
+                var entry;
+                entry = getDataId("imagem", arrImagens[element], "src");
+                imagens.push(entry);
+            }
+
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: serverUrl + "backoffice/news",
+                url: serverUrl + "backoffice/news/" + JSON.stringify(categorys) + "/" + JSON.stringify(imagens) + "/" + JSON.stringify(tags) + "/" + JSON.stringify(videos),
                 data: {
                     headline: $('input[name="manchete"]').val(),
                     subtitle: $('input[name="subManchete"]').val(),
@@ -135,70 +175,71 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    var insertId = response.insertId;
-                    var data = [];
-                    var entry;
-                    if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
-                        $('.label-info.success').each(function () {
-                            entry = {}
-                            entry['idNoticia'] = insertId;
-                            entry['idTag'] = getDataId("tag", $(this).text(), "titulo");
-                            data.push(entry);
-                        });
-                        console.log(data);
-                        $.ajax({
-                            type: "POST",
-                            url: serverUrl + "createNoticiaTag",
-                            data: {
-                                data: data,
-                                token: localStorage.getItem('token')
-                            },
-                            success: function (response) {
-                                console.log(response);
-                                var data = [];
-                                var entry;
-                                if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
-                                    var arrCategorias = $('input[name="categoria"]').val().split(", ");
-                                    arrCategorias = arrCategorias.filter(function (value, index, self) {
-                                        return (self.indexOf(value) == index)
-                                    });
-                                    for (var element in arrCategorias) {
-                                        entry = {}
-                                        entry['idNoticia'] = insertId;
-                                        entry['idCategoria'] = getDataId("categoria", arrCategorias[element], "titulo");
-                                        data.push(entry);
-                                    }
-                                    console.log(data);
-                                    $.ajax({
-                                        type: "POST",
-                                        url: serverUrl + "createNoticiaCategoria",
-                                        data: {
-                                            data: data,
-                                            token: localStorage.getItem('token')
-                                        },
-                                        success: function (response) {
-                                            console.log(response);
-                                            if ($('input[name="video"]').val() != "")
-                                                createNoticiaVideo(response, insertId);
-                                            else
-                                            if ($('input[name="imagem"]').val() != "")
-                                                createNoticiaImagem(response, insertId);
-                                            else
-                                                registerMessage(response, $('#noticia'), "NOTÍCIA", true);
-                                        },
-                                        error: function (error) {
-                                            console.log(error.message);
-                                            logout('Sessão inválida. Faça o login novamente.');
-                                        }
-                                    });
-                                }
-                            },
-                            error: function (error) {
-                                console.log(error.message);
-                                logout('Sessão inválida. Faça o login novamente.');
-                            }
-                        });
-                    }
+                    registerMessage(response, $('#noticia'), "NOTÍCIA", true);
+                    // var insertId = response.insertId;
+                    // var data = [];
+                    // var entry;
+                    // if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
+                    //     $('.label-info.success').each(function () {
+                    //         entry = {}
+                    //         entry['idNoticia'] = insertId;
+                    //         entry['idTag'] = getDataId("tag", $(this).text(), "titulo");
+                    //         data.push(entry);
+                    //     });
+                    //     console.log(data);
+                    //     $.ajax({
+                    //         type: "POST",
+                    //         url: serverUrl + "createNoticiaTag",
+                    //         data: {
+                    //             data: data,
+                    //             token: localStorage.getItem('token')
+                    //         },
+                    //         success: function (response) {
+                    //             console.log(response);
+                    //             var data = [];
+                    //             var entry;
+                    //             if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
+                    //                 var arrCategorias = $('input[name="categoria"]').val().split(", ");
+                    //                 arrCategorias = arrCategorias.filter(function (value, index, self) {
+                    //                     return (self.indexOf(value) == index)
+                    //                 });
+                    //                 for (var element in arrCategorias) {
+                    //                     entry = {}
+                    //                     entry['idNoticia'] = insertId;
+                    //                     entry['idCategoria'] = getDataId("categoria", arrCategorias[element], "titulo");
+                    //                     data.push(entry);
+                    //                 }
+                    //                 console.log(data);
+                    //                 $.ajax({
+                    //                     type: "POST",
+                    //                     url: serverUrl + "createNoticiaCategoria",
+                    //                     data: {
+                    //                         data: data,
+                    //                         token: localStorage.getItem('token')
+                    //                     },
+                    //                     success: function (response) {
+                    //                         console.log(response);
+                    //                         if ($('input[name="video"]').val() != "")
+                    //                             createNoticiaVideo(response, insertId);
+                    //                         else
+                    //                         if ($('input[name="imagem"]').val() != "")
+                    //                             createNoticiaImagem(response, insertId);
+                    //                         else
+                    //                             registerMessage(response, $('#noticia'), "NOTÍCIA", true);
+                    //                     },
+                    //                     error: function (error) {
+                    //                         console.log(error.message);
+                    //                         logout('Sessão inválida. Faça o login novamente.');
+                    //                     }
+                    //                 });
+                    //             }
+                    //         },
+                    //         error: function (error) {
+                    //             console.log(error.message);
+                    //             logout('Sessão inválida. Faça o login novamente.');
+                    //         }
+                    //     });
+                    // }
                 },
                 error: function (error) {
                     console.log(error.message);

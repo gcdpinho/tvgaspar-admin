@@ -44,7 +44,7 @@ $(function () {
         var url = serverUrl;
         switch (page) {
             case "noticia":
-                url += "backoffice/news/deleteNoticiaById/" + $("#modalId").html();
+                url += "backoffice/news/" + $("#modalId").html();
                 break;
             case "publicidade":
                 url += "backoffice/ad/" + $("#modalId").html();

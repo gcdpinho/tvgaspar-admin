@@ -769,7 +769,7 @@ var getAllCategorias = function (close, listar) {
         else {
             var categorias = value.split(", ");
             for (var element in categorias)
-                if (getDataId("categoria", categorias[element], "titulo") == undefined)
+                if (getDataId("categoria", categorias[element], "category") == undefined)
                     return false;
 
             return true;
@@ -1051,7 +1051,8 @@ var tableFunction = function (data, colunas, params, close) {
                             subManchete: table.row($(this).parents("tr")).data()[1],
                             texto: table.row($(this).parents("tr")).data()[2],
                             autor: table.row($(this).parents("tr")).data()[3],
-                            dtCadastro: table.row($(this).parents("tr")).data()[4],
+                            resumo: table.row($(this).parents("tr")).data()[4],
+                            dtCadastro: table.row($(this).parents("tr")).data()[6],
                             id: getDataId(params, table.row($(this).parents("tr")).data()[0], "headline"),
                         }
                         break

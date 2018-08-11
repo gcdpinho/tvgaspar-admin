@@ -39,14 +39,15 @@ $(function () {
         if ($("#video").valid()) {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
-                type: "POST",
-                url: serverUrl + "updateVideo",
+                type: "PUT",
+                url: serverUrl + "backoffice/video/" + dataVideo.id,
                 data: {
-                    titulo: $('input[name="titulo"]').val(),
-                    texto: $('input[name="texto"]').val(),
-                    link: $('input[name="link"]').val(),
-                    id: dataVideo.id,
-                    token: localStorage.getItem('token')
+                    video: $('input[name="titulo"]').val(),
+                    description: $('input[name="texto"]').val(),
+                    src: $('input[name="link"]').val()
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);
