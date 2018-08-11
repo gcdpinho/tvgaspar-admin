@@ -485,34 +485,34 @@ $(function () {
 
 //Função de logout do sistema
 var logout = function (msgError) {
-    // console.log(msgError);
-    // localStorage.setItem('token', "");
-    // localStorage.setItem('usuario', "");
-    // localStorage.setItem('tag', "");
-    // localStorage.setItem('imagem', "");
-    // localStorage.setItem('video', "");
-    // localStorage.setItem('categoria', "");
-    // localStorage.setItem('noticia', "");
-    // localStorage.setItem('publicidade', "");
-    // localStorage.setItem('aprovacao', "");
-    // localStorage.setItem('not', "");
-    // localStorage.setItem('tagEdit', "");
-    // localStorage.setItem('imagemEdit', "");
-    // localStorage.setItem('videoEdit', "");
-    // localStorage.setItem('categoriaEdit', "");
-    // localStorage.setItem('noticiaEdit', "");
-    // localStorage.setItem('publicidadeEdit', "");
-    // localStorage.setItem('lembrarSenha', "");
-    // if (typeof msgError == "object")
-    //     localStorage.setItem('msgError', "");
-    // else
-    //     localStorage.setItem('msgError', msgError);
+    console.log(msgError);
+    localStorage.setItem('token', "");
+    localStorage.setItem('usuario', "");
+    localStorage.setItem('tag', "");
+    localStorage.setItem('imagem', "");
+    localStorage.setItem('video', "");
+    localStorage.setItem('categoria', "");
+    localStorage.setItem('noticia', "");
+    localStorage.setItem('publicidade', "");
+    localStorage.setItem('aprovacao', "");
+    localStorage.setItem('not', "");
+    localStorage.setItem('tagEdit', "");
+    localStorage.setItem('imagemEdit', "");
+    localStorage.setItem('videoEdit', "");
+    localStorage.setItem('categoriaEdit', "");
+    localStorage.setItem('noticiaEdit', "");
+    localStorage.setItem('publicidadeEdit', "");
+    localStorage.setItem('lembrarSenha', "");
+    if (typeof msgError == "object")
+        localStorage.setItem('msgError', "");
+    else
+        localStorage.setItem('msgError', msgError);
 
-    // var path = location.pathname;
-    // if (path.indexOf('pages') >= 0)
-    //     location.href = "../login/login.html";
-    // else
-    //     location.href = "pages/login/login.html"
+    var path = location.pathname;
+    if (path.indexOf('pages') >= 0)
+        location.href = "../login/login.html";
+    else
+        location.href = "pages/login/login.html"
 }
 
 $('#logout').click(logout);
