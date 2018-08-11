@@ -29,12 +29,13 @@ $(function () {
     $('.noticia-detail button').click(function () {
         $('.page-loader-wrapper').fadeIn();
         $.ajax({
-            type: "POST",
-            url: serverUrl + "updateAprovacao",
+            type: "PUT",
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            url: serverUrl + 'backoffice/news/' + getDataId("aprovacao", $('input[name="manchete"]').val(), "headline"),
             data: {
-                id: getDataId("aprovacao", $('input[name="manchete"]').val(), "manchete"),
-                aprovacao: 1,
-                token: localStorage.getItem('token')
+                approval: 1,
             },
             success: function (response) {
                 console.log(response);

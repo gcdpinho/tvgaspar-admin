@@ -1019,8 +1019,8 @@ var tableFunction = function (data, colunas, params, close) {
                     $('input[name="subManchete"]').val(table.row(this).data()[1]);
                     tinymce.activeEditor.setContent(table.row(this).data()[2]);
                     tinymce.activeEditor.setMode('readonly');
-                    $('input[name="autor"]').val(table.row(this).data()[3]);
-                    $('input[name="dtCadastro"]').val(table.row(this).data()[4]);
+                    $('input[name="autor"]').val(table.row(this).data()[4]);
+                    $('input[name="dtCadastro"]').val(table.row(this).data()[5]);
                     $('.background-table').fadeIn();
                     $('.table-responsive').fadeIn();
                     break;
@@ -1201,7 +1201,7 @@ var getAllNoticias = function (aprovacao, close) {
             var arrNoticia = [];
             var arrAprov = [];
             for (var element in response)
-                if (response[element].aprovacao == 0)
+                if (response[element].approval == 0)
                     arrAprov.push(response[element]);
                 else
                     arrNoticia.push(response[element])
@@ -1268,6 +1268,7 @@ $('.btn-cancel').click(function () {
 //Permissão de adm para todos os elementos de classe isAdm
 var adm = function () {
     var usuario = JSON.parse(localStorage.getItem('usuario'));
-    if (usuario.isAdm == 0)
+    console.log(usuario);
+    if (usuario.flgAdm == 0)
         $('.isAdm').css('display', 'none');
 };

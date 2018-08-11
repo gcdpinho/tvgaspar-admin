@@ -170,7 +170,7 @@ $(function () {
                     author: $('input[name="autor"]').val(),
                     // created_at: $('input[name="dtCadastro"]').val(),
                     flgActive: 1,
-                    approval: usuario.isAdm,
+                    approval: usuario.flgAdm,
                     user_id: usuario.id
                 },
                 headers: {
