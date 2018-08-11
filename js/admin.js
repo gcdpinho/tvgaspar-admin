@@ -1020,7 +1020,8 @@ var tableFunction = function (data, colunas, params, close) {
                     tinymce.activeEditor.setContent(table.row(this).data()[2]);
                     tinymce.activeEditor.setMode('readonly');
                     $('input[name="autor"]').val(table.row(this).data()[4]);
-                    $('input[name="dtCadastro"]').val(table.row(this).data()[5]);
+                    // $('input[name="dtCadastro"]').val(table.row(this).data()[5]);
+                    $('input[name="resumo"]').val(table.row(this).data()[3].replace('<div class="innerTd">', '').replace('</div>', ''));
                     $('.background-table').fadeIn();
                     $('.table-responsive').fadeIn();
                     break;
@@ -1068,7 +1069,7 @@ var tableFunction = function (data, colunas, params, close) {
                             texto: table.row($(this).parents("tr")).data()[2],
                             autor: table.row($(this).parents("tr")).data()[4],
                             resumo: table.row($(this).parents("tr")).data()[3].replace('<div class="innerTd">', '').replace('</div>', ''),
-                            dtCadastro: table.row($(this).parents("tr")).data()[5],
+                            // dtCadastro: table.row($(this).parents("tr")).data()[5],
                             id: getDataId(params, table.row($(this).parents("tr")).data()[0], "headline"),
                         }
                         break
@@ -1268,7 +1269,7 @@ $('.btn-cancel').click(function () {
 //Permissão de adm para todos os elementos de classe isAdm
 var adm = function () {
     var usuario = JSON.parse(localStorage.getItem('usuario'));
-    console.log(usuario);
+    // console.log(usuario);
     if (usuario.flgAdm == 0)
         $('.isAdm').css('display', 'none');
 };

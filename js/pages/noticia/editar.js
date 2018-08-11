@@ -97,8 +97,8 @@ $(function () {
     $('input[name="subManchete"]').focus();
     $('input[name="autor"]').val(dataNoticia.autor);
     $('input[name="autor"]').focus();
-    $('input[name="dtCadastro"]').val(dataNoticia.dtCadastro);
-    $('input[name="dtCadastro"]').parents('.form-line').addClass('focused');
+    // $('input[name="dtCadastro"]').val(dataNoticia.dtCadastro);
+    // $('input[name="dtCadastro"]').parents('.form-line').addClass('focused');
     $('textarea[name="texto"]').val(dataNoticia.texto);
     $('textarea[name="texto"]').focus();
     $('input[name="resumo"]').val(dataNoticia.resumo);
@@ -124,7 +124,7 @@ $(function () {
                     abstract: $('input[name="resumo"]').val(),
                     body: tinymce.activeEditor.getContent(),
                     author: $('input[name="autor"]').val(),
-                    created_at: $('input[name="dtCadastro"]').val()
+                    // created_at: $('input[name="dtCadastro"]').val()
                 },
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
