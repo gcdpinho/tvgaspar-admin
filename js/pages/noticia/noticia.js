@@ -119,7 +119,8 @@ $(function () {
             $('.label-info.success').each(function () {
                 var entry;
                 entry = getDataId("tag", $(this).text(), "tag");
-                tags.push(entry);
+                if (entry != undefined)
+                    tags.push(entry);
             });
 
             var categorys = [];
@@ -130,7 +131,8 @@ $(function () {
             for (var element in arrCategorias) {
                 var entry;
                 entry = getDataId("categoria", arrCategorias[element], "category");
-                categorys.push(entry);
+                if (entry != undefined)
+                    categorys.push(entry);
             }
 
             var videos = [];
@@ -141,7 +143,8 @@ $(function () {
             for (var element in arrVideos) {
                 var entry;
                 entry = getDataId("video", arrVideos[element], "src");
-                videos.push(entry);
+                if (entry != undefined)
+                    videos.push(entry);
             }
 
             var imagens = [];
@@ -152,9 +155,9 @@ $(function () {
             for (var element in arrImagens) {
                 var entry;
                 entry = getDataId("imagem", arrImagens[element], "src");
-                imagens.push(entry);
+                if (entry != undefined)
+                    imagens.push(entry);
             }
-
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
@@ -165,7 +168,7 @@ $(function () {
                     abstract: $('input[name="resumo"]').val(),
                     body: tinymce.activeEditor.getContent(),
                     author: $('input[name="autor"]').val(),
-                    created_at: $('input[name="dtCadastro"]').val(),
+                    // created_at: $('input[name="dtCadastro"]').val(),
                     flgActive: 1,
                     approval: usuario.isAdm,
                     user_id: usuario.id

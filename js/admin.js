@@ -831,8 +831,16 @@ var search = async function (params, close) {
             colunaAux.pop();
             colunaAux.pop();
             colunaAux.pop();
+            colunaAux.pop();
+            colunaAux.pop();
+            colunaAux.pop();
+            colunaAux.pop();
+            colunaAux.pop();
         } else if (params == "publicidade") {
             colunaAux.pop();
+            colunaAux.pop();
+            colunaAux.pop();
+        } else if (params == "video") {
             colunaAux.pop();
         }
         for (var element in colunaAux) {
@@ -852,11 +860,11 @@ var search = async function (params, close) {
         for (var index in list) {
             var row = [];
             for (var element in list[index]) {
-                if ((params == "noticia" || params == "aprovacao") && element == "texto")
+                if ((params == "noticia" || params == "aprovacao") && (element == "body" || element == "abstract"))
                     row.push('<div class="innerTd">' + list[index][element] + '</div>');
                 else
-                if (element == "dtCadastro") {
-                    if (list[index][element].split('.')[1] != undefined)
+                if (element == "created_at") {
+                    if (list[index][element] != null && list[index][element].split('.')[1] != undefined)
                         row.push(Date.parse(list[index][element].split('.')[0]).toString("dd/MM/yyyy H:mm"));
                     else
                         row.push("");
@@ -868,8 +876,16 @@ var search = async function (params, close) {
                 row.pop();
                 row.pop();
                 row.pop();
+                row.pop();
+                row.pop();
+                row.pop();
+                row.pop();
+                row.pop();
             } else if (params == "publicidade") {
                 row.pop();
+                row.pop();
+                row.pop();
+            } else if (params == "video") {
                 row.pop();
             }
             if (params == "imagem") {
@@ -1050,9 +1066,9 @@ var tableFunction = function (data, colunas, params, close) {
                             manchete: table.row($(this).parents("tr")).data()[0],
                             subManchete: table.row($(this).parents("tr")).data()[1],
                             texto: table.row($(this).parents("tr")).data()[2],
-                            autor: table.row($(this).parents("tr")).data()[3],
-                            resumo: table.row($(this).parents("tr")).data()[4],
-                            dtCadastro: table.row($(this).parents("tr")).data()[6],
+                            autor: table.row($(this).parents("tr")).data()[4],
+                            resumo: table.row($(this).parents("tr")).data()[3].replace('<div class="innerTd">', '').replace('</div>', ''),
+                            dtCadastro: table.row($(this).parents("tr")).data()[5],
                             id: getDataId(params, table.row($(this).parents("tr")).data()[0], "headline"),
                         }
                         break
