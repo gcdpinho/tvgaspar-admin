@@ -54,13 +54,14 @@ $(function () {
         if ((nome != usuario.nome || email != usuario.email) && $("#perfil").valid()) {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
-                type: "POST",
-                url: serverUrl + "updateData",
+                type: "PUT",
+                url: serverUrl + "backoffice/user/" + usuario.id,
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
                 data: {
                     nome: nome == "" ? usuario.nome : nome,
-                    email: email == "" ? usuario.email : email,
-                    id: usuario.id,
-                    token: localStorage.getItem('token')
+                    email: email == "" ? usuario.email : email
                 },
                 success: function (response) {
                     console.log(response);
@@ -83,13 +84,14 @@ $(function () {
         if ($("#senha").valid()) {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
-                type: "POST",
-                url: serverUrl + "alterPassword",
+                type: "PUT",
+                url: serverUrl +  "backoffice/user/password/" + usuario.id,
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
                 data: {
-                    id: usuario.id,
-                    senha: $('input[name="senhaAtual"]').val(),
-                    novaSenha: $('input[name="novaSenha"]').val(),
-                    token: localStorage.getItem('token')
+                    password: $('input[name="senhaAtual"]').val(),
+                    newPassword: $('input[name="novaSenha"]').val(),
                 },
                 success: function (response) {
                     console.log(response);
@@ -101,7 +103,7 @@ $(function () {
                 },
                 error: function (error) {
                     console.log(error.message);
-                    logout('Sessão inválida. Faça o login novamente.');
+                    // logout('Sessão inválida. Faça o login novamente.');
                 }
             });
         }
