@@ -246,7 +246,12 @@ $(function () {
                 },
                 error: function (error) {
                     console.log(error.message);
-                    logout('Sessão inválida. Faça o login novamente.');
+                    if (error.responseJSON && error.responseJSON.err.code == 'ER_DUP_ENTRY') {
+                        $('.page-loader-wrapper').fadeOut();
+                        showNotification("Erro ao cadastrar: NOTÍCIA já cadastrada!", "error");
+
+                    } else
+                        logout('Sessão inválida. Faça o login novamente.');
                 }
             });
             e.preventDefault();
